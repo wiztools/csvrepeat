@@ -10,7 +10,7 @@ import (
 
 func main() {
 	if len(os.Args) < 2 {
-		fmt.Println("Enter file name as argument")
+		os.Stderr.WriteString("Enter file name as argument\n")
 		os.Exit(1)
 	}
 
@@ -18,7 +18,7 @@ func main() {
 
 	readFile, err := os.Open(filename)
 	if err != nil {
-		fmt.Println("Err opening file:", filename)
+		os.Stderr.WriteString("Err opening file:" + filename + "\n")
 		os.Exit(1)
 	}
 	defer readFile.Close()
@@ -29,13 +29,13 @@ func main() {
 		line := fileScanner.Text()
 		arr := strings.Split(line, ",")
 		if len(arr) != 2 {
-			fmt.Println("Err line does not match signature:", line)
+			os.Stderr.WriteString("Err line does not match signature:" + line + "\n")
 			os.Exit(1)
 		}
 		tag := arr[0]
 		count, err := strconv.Atoi(arr[1])
 		if err != nil {
-			fmt.Println("Err CSV col-2 NaN:", line)
+			os.Stderr.WriteString("Err CSV col-2 NaN:" + line + "\n")
 			os.Exit(1)
 		}
 		for i := 0; i < count; i++ {
